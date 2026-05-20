@@ -4,13 +4,13 @@
 
 bool g_running = true;
 
-static void signalHandler(int sig) 
+static void signalHandler(int sig)
 {
 	(void)sig;
 	g_running = false;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
 	if (argc != 3) {
 		std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;

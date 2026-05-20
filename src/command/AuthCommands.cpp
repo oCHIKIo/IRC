@@ -16,7 +16,8 @@ static bool isValidNick(const std::string &nick)
 		return false;
 	return true;
 }
-void Server::cmdPass(Client *c, const std::vector<std::string> &args) 
+
+void Server::cmdPass(Client *c, const std::vector<std::string> &args)
 {
 	if (c->hasPasswd() || c->isRegistered())
 		return sendNumeric(c, ERR_ALREADYREGISTERED, ":Already registered");
@@ -68,20 +69,20 @@ void Server::cmdUser(Client *c, const std::vector<std::string> &args)
 	tryRegister(c);
 }
 
-void Server::cmdQuit(Client *c, const std::vector<std::string> &args) 
+void Server::cmdQuit(Client *c, const std::vector<std::string> &args)
 {
 	(void)args;
 	int fd = c->getFd();
-	for (size_t i = 0; i < _pollfds.size(); i++) 
-    {
-		if (_pollfds[i].fd == fd) 
-        {
+	for (size_t i = 0; i < _pollfds.size(); i++)
+	{
+		if (_pollfds[i].fd == fd)
+		{
 			disconnectClient(i);
 			return;
 		}
 	}
 }
-void Server::cmdPing(Client *c, const std::vector<std::string> &args) 
+void Server::cmdPing(Client *c, const std::vector<std::string> &args)
 {
 	if (args.empty())
 		return sendNumeric(c, ERR_NEEDMOREPARAMS, "PING :Not enough parameters");
