@@ -64,6 +64,12 @@ void Server::cmdUser(Client *c, const std::vector<std::string> &args)
 		return sendNumeric(c, ERR_ALREADYREGISTERED, ":Already registered");
 	if (args.size() < 4)
 		return sendNumeric(c, ERR_NEEDMOREPARAMS, "USER :Not enough parameters");
+	if (!c->hasPasswd())
+	{
+		sendNumeric(c, ERR_PASSWDMISMATCH, ":Password incorrect");
+		c->setPasswd(false);
+		return;
+	}
 	c->setUser(args[0]);
 	c->setReal(args[3]);
 	tryRegister(c);

@@ -40,3 +40,12 @@ int main(int argc, char **argv)
 	}
 	return 0;
 }
+
+/*	
+	--> a socket is a software object and a communication endpoint 
+		socket associated with ip adress + port + protocol (udp/tcp)
+	
+	--> socket() this is a system call provided by the OS
+		its job to create an empy endpoint communication (a socket object)
+		and return a file descriptor
+*/
