@@ -1,0 +1,6 @@
+obj/
+ircserv
+*.o
+*.dSYM
+.vscode/
+.DS_Store
