@@ -8,6 +8,8 @@ This project implements a server that speaks the IRC protocol. You run it, clien
 
 ## How it works
 
+![architecture](architecture.png)
+
 The server opens a TCP socket and listens on the port you give it. When a client connects, the server adds it to a poll() watchlist. From there everything is event-driven. A single thread, a single process. The main loop calls poll(), which blocks until something happens on any of the watched file descriptors. When data arrives from a client, the server reads it into a buffer, extracts complete lines (terminated by \r\n as the IRC spec requires), parses them, and dispatches the appropriate command handler.
 
 Non-blocking I/O is important here. Every socket is set to O_NONBLOCK so a slow client can never stall the entire server. Outgoing data goes into a per-client write buffer and gets flushed when poll() reports the socket is writable (POLLOUT). This way you never block on send() either.
